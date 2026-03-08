@@ -23,6 +23,7 @@ class Post(Base):
     title      = Column(String(200), nullable=False)
     slug       = Column(String(200), unique=True, nullable=False, index=True)
     content    = Column(Text, nullable=False)
+    content_es = Column(Text, nullable=True)
     excerpt    = Column(String(500), nullable=True)
     tags         = Column(String(500), nullable=True)
     cover_image  = Column(String(500), nullable=True)

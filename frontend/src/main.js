@@ -7,6 +7,7 @@ import Blog from './pages/Blog.vue'
 import BlogPost from './pages/BlogPost.vue'
 import About from './pages/About.vue'
 import Admin from './pages/Admin.vue'
+import i18n from './i18n/index.js'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,4 +21,4 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 }),
 })
 
-createApp(App).use(router).mount('#app')
+createApp(App).use(router).use(i18n).mount('#app')

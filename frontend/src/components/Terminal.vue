@@ -863,10 +863,13 @@ const termSize     = ref(loadSize())
 const maximized    = ref(false)
 const preMaxSize   = ref(null)
 
-const termStyle = computed(() => maximized.value
-  ? { width: '92vw', height: '85vh', right: '4vw', bottom: '5rem' }
-  : { width: `${termSize.value.w}px`, height: `${termSize.value.h}px` }
-)
+const isMobile = () => window.innerWidth < 640
+
+const termStyle = computed(() => {
+  if (maximized.value) return { height: '85vh' }
+  if (isMobile())      return { height: '60vh' }   // full width via CSS left-2/right-2
+  return { width: `${termSize.value.w}px`, height: `${termSize.value.h}px` }
+})
 
 function saveSize() {
   localStorage.setItem('terminal_size', JSON.stringify(termSize.value))
@@ -929,14 +932,14 @@ const bodyHeight = computed(() =>
   <!-- Toggle button -->
   <button
     @click="open = !open"
-    class="fixed bottom-6 right-5 z-50 flex items-center gap-2 px-4 py-2.5 rounded-xl font-mono text-xs font-semibold shadow-lg transition-all duration-200"
+    class="fixed bottom-4 right-4 z-[90] flex items-center gap-2 px-3 py-2 sm:px-4 sm:py-2.5 rounded-xl font-mono text-xs font-semibold shadow-lg transition-all duration-200"
     :class="open
       ? 'bg-violet-500 text-white shadow-violet-500/30'
       : 'bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 hover:bg-violet-500 hover:text-white hover:shadow-violet-500/40 dark:hover:bg-violet-500 dark:hover:text-white'"
     title="Open terminal"
   >
     <span class="i-lucide-terminal w-4 h-4 shrink-0" />
-    <span>terminal</span>
+    <span class="hidden sm:inline">terminal</span>
     <span v-if="!open" class="relative flex h-2 w-2">
       <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-violet-400 opacity-75" />
       <span class="relative inline-flex rounded-full h-2 w-2 bg-violet-500" />
@@ -947,7 +950,9 @@ const bodyHeight = computed(() =>
   <Transition name="slide">
     <div
       v-if="open"
-      class="fixed bottom-20 right-5 z-50 flex flex-col rounded-xl overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-950 text-zinc-100 font-mono text-xs"
+      class="fixed z-[90] flex flex-col rounded-xl overflow-hidden shadow-2xl border border-zinc-800 bg-zinc-950 text-zinc-100 font-mono text-xs
+             bottom-16 right-2 left-2
+             sm:bottom-20 sm:left-auto sm:right-5"
       :style="termStyle"
     >
       <!-- Resize grip — top-left corner -->

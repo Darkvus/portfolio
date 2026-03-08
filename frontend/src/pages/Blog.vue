@@ -1,13 +1,15 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { getPosts } from '../api/index.js'
 
+const { t, locale } = useI18n()
 const posts = ref([])
 const loading = ref(true)
 const error = ref(null)
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('en-US', {
+  return new Date(dateStr).toLocaleDateString(locale.value === 'es' ? 'es-ES' : 'en-US', {
     year: 'numeric', month: 'short', day: 'numeric',
   })
 }
@@ -15,12 +17,12 @@ function formatDate(dateStr) {
 function readingTime(content) {
   const words = content?.trim().split(/\s+/).length ?? 0
   const mins  = Math.max(1, Math.round(words / 200))
-  return `${mins} min read`
+  return `${mins} ${t('blog.minRead')}`
 }
 
 onMounted(async () => {
   try {
-    posts.value = await getPosts()
+    posts.value = await getPosts(locale.value)
   } catch (e) {
     error.value = e.message
   } finally {
@@ -33,19 +35,19 @@ onMounted(async () => {
   <section class="space-y-10">
 
     <div class="space-y-2 pt-6">
-      <h1 class="text-3xl font-bold">Blog</h1>
+      <h1 class="text-3xl font-bold">{{ t('blog.title') }}</h1>
       <p class="text-zinc-500 dark:text-zinc-400">
-        Thoughts on Python, backend development, and engineering.
+        {{ t('blog.description') }}
       </p>
     </div>
 
-    <div v-if="loading" class="text-sm text-zinc-400 font-mono">loading posts...</div>
+    <div v-if="loading" class="text-sm text-zinc-400 font-mono">{{ t('blog.loading') }}</div>
 
     <div v-else-if="error || posts.length === 0" class="py-20 flex flex-col items-center gap-4 text-center">
       <span class="i-lucide-scroll-text w-12 h-12 text-zinc-300 dark:text-zinc-700" />
       <div class="space-y-1">
-        <p class="font-mono text-sm text-zinc-500 dark:text-zinc-400">// nothing here yet</p>
-        <p class="text-xs text-zinc-400 dark:text-zinc-600">Posts are on the way — check back soon.</p>
+        <p class="font-mono text-sm text-zinc-500 dark:text-zinc-400">{{ t('blog.empty') }}</p>
+        <p class="text-xs text-zinc-400 dark:text-zinc-600">{{ t('blog.emptyHint') }}</p>
       </div>
     </div>
 
@@ -103,7 +105,7 @@ onMounted(async () => {
               </span>
             </div>
             <span class="text-xs text-violet-300 group-hover:text-violet-200 transition-colors flex items-center gap-1">
-              Read
+              {{ t('blog.readMore') }}
               <span class="i-lucide-arrow-right w-3 h-3 transition-transform group-hover:translate-x-0.5" />
             </span>
           </div>

@@ -9,11 +9,11 @@ async function req(path, options = {}) {
   return res.json()
 }
 
-export const getPosts = () =>
-  req('/posts/')
+export const getPosts = (lang = 'en') =>
+  req(`/posts/?lang=${lang}`)
 
-export const getPost = (slug) =>
-  req(`/posts/${slug}`)
+export const getPost = (slug, lang = 'en') =>
+  req(`/posts/${slug}?lang=${lang}`)
 
 export const getAllPosts = (token) =>
   req('/posts/all', { headers: { Authorization: `Bearer ${token}` } })

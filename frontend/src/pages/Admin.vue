@@ -45,7 +45,7 @@ const formError  = ref('')
 const formSuccess = ref('')
 
 const emptyForm = () => ({
-  title: '', slug: '', content: '', excerpt: '', tags: '', cover_image: '', published: false,
+  title: '', slug: '', content: '', content_es: '', excerpt: '', tags: '', cover_image: '', published: false,
 })
 
 const coverPreview = ref('')
@@ -96,6 +96,7 @@ function editPost(post) {
     title:       post.title,
     slug:        post.slug,
     content:     post.content,
+    content_es:  post.content_es || '',
     excerpt:     post.excerpt || '',
     tags:        post.tags || '',
     cover_image: post.cover_image || '',
@@ -346,11 +347,30 @@ onMounted(() => {
               </div>
             </div>
 
-            <!-- Markdown editor -->
+            <!-- Markdown editor EN -->
             <div class="space-y-1">
-              <label class="text-xs text-zinc-500">Content * <span class="text-zinc-400">(Markdown)</span></label>
+              <label class="text-xs text-zinc-500">
+                Content (EN) *
+                <span class="text-zinc-400">(Markdown — required)</span>
+              </label>
               <MdEditor
                 v-model="form.content"
+                :theme="isDark ? 'dark' : 'light'"
+                language="en-US"
+                preview-theme="github"
+                :on-upload-img="onUploadImg"
+                style="height: 500px; border-radius: 0.5rem; overflow: hidden;"
+              />
+            </div>
+
+            <!-- Markdown editor ES -->
+            <div class="space-y-1">
+              <label class="text-xs text-zinc-500">
+                Content (ES)
+                <span class="text-zinc-400">(Markdown — optional, shown when lang=es)</span>
+              </label>
+              <MdEditor
+                v-model="form.content_es"
                 :theme="isDark ? 'dark' : 'light'"
                 language="en-US"
                 preview-theme="github"
@@ -394,6 +414,7 @@ onMounted(() => {
                 <span :class="post.published ? 'text-green-500' : 'text-zinc-400'" class="ml-2">
                   {{ post.published ? '● published' : '○ draft' }}
                 </span>
+                <span v-if="post.content_es" class="ml-2 text-violet-400">🌐 ES</span>
               </p>
             </div>
             <div class="flex gap-2 shrink-0">

@@ -1,31 +1,38 @@
 <script setup>
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, watch } from 'vue'
 import { useRoute } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { MdPreview } from 'md-editor-v3'
 import 'md-editor-v3/lib/preview.css'
 import { getPost } from '../api/index.js'
 
 const { isDark } = inject('theme')
 const route   = useRoute()
+const { t, locale } = useI18n()
 const post    = ref(null)
 const loading = ref(true)
 const notFound = ref(false)
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('en-US', {
+  return new Date(dateStr).toLocaleDateString(locale.value === 'es' ? 'es-ES' : 'en-US', {
     year: 'numeric', month: 'long', day: 'numeric',
   })
 }
 
-onMounted(async () => {
+async function fetchPost() {
+  loading.value = true
+  notFound.value = false
   try {
-    post.value = await getPost(route.params.slug)
+    post.value = await getPost(route.params.slug, locale.value)
   } catch {
     notFound.value = true
   } finally {
     loading.value = false
   }
-})
+}
+
+watch(locale, fetchPost)
+onMounted(fetchPost)
 </script>
 
 <template>
@@ -33,16 +40,16 @@ onMounted(async () => {
     <div v-if="loading" class="pt-6 text-sm text-zinc-400 font-mono">loading...</div>
 
     <div v-else-if="notFound" class="pt-6 text-center py-16">
-      <p class="font-mono text-zinc-400">// 404 — post not found</p>
+      <p class="font-mono text-zinc-400">{{ t('post.notFound') }}</p>
       <RouterLink to="/blog" class="text-sm text-violet-500 hover:text-violet-400 mt-4 inline-block">
-        ← Back to blog
+        {{ t('post.backLink') }}
       </RouterLink>
     </div>
 
     <article v-else class="space-y-8">
       <header class="space-y-4 pt-6">
         <RouterLink to="/blog" class="text-sm text-zinc-400 hover:text-violet-500 transition-colors">
-          ← Blog
+          {{ t('post.back') }}
         </RouterLink>
         <div class="space-y-3">
           <h1 class="text-3xl sm:text-4xl font-bold leading-tight">{{ post.title }}</h1>
@@ -83,6 +90,13 @@ onMounted(async () => {
  * Preview div:   .md-editor-v3-preview
  */
 
+/* ── Isolate stacking context so code blocks never leak above navbar ── */
+.md-post-content {
+  isolation: isolate;
+  position: relative;
+  z-index: 0;
+}
+
 /* ── Root & wrappers: fully transparent ── */
 .md-post-content.md-editor-v3,
 .md-post-content .md-editor-v3-preview-wrapper,
@@ -91,6 +105,14 @@ onMounted(async () => {
   border: none !important;
   box-shadow: none !important;
   padding: 0 !important;
+}
+
+/* ── Code block container: never overflow the stacking context ── */
+.md-post-content pre,
+.md-post-content .md-editor-v3-code,
+.md-post-content .md-editor-v3-code-head {
+  position: relative;
+  z-index: 0;
 }
 
 /* ── Reset CSS custom properties (light + dark) ── */

@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 import { getPosts } from '../api/index.js'
 import NewsletterSignup from '../components/NewsletterSignup.vue'
 
+const { t, locale } = useI18n()
 const posts = ref([])
 const loading = ref(true)
 
@@ -14,14 +16,14 @@ const stack = [
 ]
 
 function formatDate(dateStr) {
-  return new Date(dateStr).toLocaleDateString('en-US', {
+  return new Date(dateStr).toLocaleDateString(locale.value === 'es' ? 'es-ES' : 'en-US', {
     year: 'numeric', month: 'short', day: 'numeric',
   })
 }
 
 onMounted(async () => {
   try {
-    posts.value = await getPosts()
+    posts.value = await getPosts(locale.value)
   } catch {
     // no posts yet or API unavailable
   } finally {
@@ -41,7 +43,7 @@ onMounted(async () => {
             Alejandro<br />Caraballo
           </h1>
           <p class="text-xl text-zinc-400 font-light">
-            Backend Developer · Python Enthusiast
+            {{ t('home.role') }}
           </p>
         </div>
         <img
@@ -51,8 +53,7 @@ onMounted(async () => {
         />
       </div>
       <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-base">
-        I build robust, efficient, and scalable backend systems. Passionate about
-        Python, clean APIs, and solving complex problems with maintainable solutions.
+        {{ t('home.bio') }}
       </p>
       <div class="flex flex-wrap items-center gap-3">
         <a
@@ -76,14 +77,14 @@ onMounted(async () => {
           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-violet-500 transition-colors"
         >
           <span class="i-lucide-user w-5 h-5" />
-          About me
+          {{ t('home.about') }}
         </RouterLink>
       </div>
     </div>
 
     <!-- Stack -->
     <div class="space-y-3">
-      <p class="font-mono text-xs text-zinc-400">// stack</p>
+      <p class="font-mono text-xs text-zinc-400">{{ t('home.stack') }}</p>
       <div class="flex flex-wrap gap-2">
         <span
           v-for="tech in stack"
@@ -98,16 +99,16 @@ onMounted(async () => {
     <!-- Recent posts -->
     <div class="space-y-4">
       <div class="flex items-center justify-between">
-        <p class="font-mono text-xs text-zinc-400">// recent posts</p>
+        <p class="font-mono text-xs text-zinc-400">{{ t('home.recent') }}</p>
         <RouterLink to="/blog" class="text-xs text-violet-500 hover:text-violet-400 transition-colors">
-          view all →
+          {{ t('home.viewAll') }}
         </RouterLink>
       </div>
 
-      <div v-if="loading" class="text-sm text-zinc-400 font-mono">loading...</div>
+      <div v-if="loading" class="text-sm text-zinc-400 font-mono">{{ t('home.loading') }}</div>
 
       <div v-else-if="posts.length === 0" class="py-8 text-center">
-        <p class="font-mono text-zinc-400 text-sm">// no posts yet — check back soon</p>
+        <p class="font-mono text-zinc-400 text-sm">{{ t('home.noPosts') }}</p>
       </div>
 
       <div v-else class="space-y-2">

@@ -1,4 +1,8 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
+
 const skills = [
   {
     category: '// backend',
@@ -23,29 +27,19 @@ const skills = [
   <section class="space-y-12">
 
     <div class="space-y-2 pt-6">
-      <h1 class="text-3xl font-bold">About me</h1>
+      <h1 class="text-3xl font-bold">{{ t('about.title') }}</h1>
     </div>
 
     <!-- Bio -->
     <div class="space-y-4 text-zinc-600 dark:text-zinc-400 leading-relaxed">
-      <p>
-        Hi! I'm <strong class="text-zinc-900 dark:text-zinc-100">Alejandro Jose Caraballo Garcia</strong>,
-        a backend developer with a deep focus on Python and building efficient, scalable systems.
-      </p>
-      <p>
-        I specialize in designing RESTful APIs, working with both relational and non-relational databases,
-        and optimizing queries for performance and maintainability. I also have experience integrating
-        AWS cloud services and automating workflows with GitHub Actions.
-      </p>
-      <p>
-        I'm passionate about writing clean code that solves real problems — and I'm always learning
-        something new.
-      </p>
+      <p v-html="t('about.bio1')" />
+      <p v-html="t('about.bio2')" />
+      <p v-html="t('about.bio3')" />
     </div>
 
     <!-- Skills -->
     <div class="space-y-4">
-      <p class="font-mono text-xs text-zinc-400">// skills</p>
+      <p class="font-mono text-xs text-zinc-400">{{ t('about.skills') }}</p>
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div
           v-for="cat in skills"
@@ -68,7 +62,7 @@ const skills = [
 
     <!-- Contact -->
     <div class="space-y-4">
-      <p class="font-mono text-xs text-zinc-400">// contact</p>
+      <p class="font-mono text-xs text-zinc-400">{{ t('about.contact') }}</p>
       <div class="flex flex-col gap-3">
         <a
           href="https://github.com/Darkvus"
