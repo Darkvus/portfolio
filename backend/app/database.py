@@ -9,13 +9,21 @@ if TURSO_URL and TURSO_TOKEN:
     # Production: Turso (libSQL) — drop-in SQLite replacement
     import libsql_experimental as libsql
 
+    class _ConnWrapper:
+        """Wraps libsql Connection (native type) to add missing DBAPI methods."""
+        def __init__(self, conn):
+            self._conn = conn
+
+        def create_function(self, *args, **kwargs):
+            pass  # no-op — SQLAlchemy needs this for REGEXP, we don't use it
+
+        def __getattr__(self, name):
+            return getattr(self._conn, name)
+
     def _creator():
         conn = libsql.connect("local.db", sync_url=TURSO_URL, auth_token=TURSO_TOKEN)
         conn.sync()
-        # SQLAlchemy's pysqlite dialect requires create_function for REGEXP support
-        if not hasattr(conn, "create_function"):
-            conn.create_function = lambda *args, **kwargs: None
-        return conn
+        return _ConnWrapper(conn)
 
     engine = create_engine(
         "sqlite+pysqlite:///:memory:",
