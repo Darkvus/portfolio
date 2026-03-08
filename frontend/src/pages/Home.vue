@@ -45,7 +45,7 @@ onMounted(async () => {
           </p>
         </div>
         <img
-          src="/favicon.png"
+          src="/darkvus.png"
           alt="Alejandro Caraballo"
           class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover ring-2 ring-violet-500/30 shrink-0"
         />
