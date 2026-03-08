@@ -23,7 +23,6 @@ const skills = [
   <section class="space-y-12">
 
     <div class="space-y-2 pt-6">
-      <p class="font-mono text-sm text-violet-500 select-none">$ cat about.md</p>
       <h1 class="text-3xl font-bold">About me</h1>
     </div>
 

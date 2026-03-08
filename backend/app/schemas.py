@@ -9,6 +9,7 @@ class PostCreate(BaseModel):
     content: str
     excerpt: Optional[str] = None
     tags: Optional[str] = None
+    cover_image: Optional[str] = None
     published: bool = False
 
 
@@ -18,6 +19,7 @@ class PostUpdate(BaseModel):
     content: Optional[str] = None
     excerpt: Optional[str] = None
     tags: Optional[str] = None
+    cover_image: Optional[str] = None
     published: Optional[bool] = None
 
 
@@ -28,6 +30,7 @@ class PostOut(BaseModel):
     content: str
     excerpt: Optional[str]
     tags: Optional[str]
+    cover_image: Optional[str]
     published: bool
     created_at: datetime
     updated_at: datetime

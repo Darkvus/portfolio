@@ -12,6 +12,12 @@ function formatDate(dateStr) {
   })
 }
 
+function readingTime(content) {
+  const words = content?.trim().split(/\s+/).length ?? 0
+  const mins  = Math.max(1, Math.round(words / 200))
+  return `${mins} min read`
+}
+
 onMounted(async () => {
   try {
     posts.value = await getPosts()
@@ -27,7 +33,6 @@ onMounted(async () => {
   <section class="space-y-10">
 
     <div class="space-y-2 pt-6">
-      <p class="font-mono text-sm text-violet-500 select-none">$ ls ./blog</p>
       <h1 class="text-3xl font-bold">Blog</h1>
       <p class="text-zinc-500 dark:text-zinc-400">
         Thoughts on Python, backend development, and engineering.
@@ -44,32 +49,64 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div v-else class="space-y-3">
+    <!-- Cards grid -->
+    <div v-else class="grid grid-cols-1 sm:grid-cols-2 gap-5">
       <RouterLink
         v-for="post in posts"
         :key="post.id"
         :to="`/blog/${post.slug}`"
-        class="block p-5 rounded-xl border border-zinc-100 dark:border-zinc-800/60 hover:border-violet-200 dark:hover:border-violet-800/60 hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-all group"
+        class="group relative flex flex-col rounded-2xl overflow-hidden border border-zinc-200 dark:border-zinc-800 hover:border-violet-400 dark:hover:border-violet-700 transition-all duration-300 hover:shadow-xl hover:shadow-violet-500/10 hover:-translate-y-0.5"
+        style="min-height: 220px"
       >
-        <div class="flex items-start justify-between gap-4">
-          <div class="space-y-1.5 min-w-0">
-            <h2 class="font-semibold group-hover:text-violet-500 transition-colors">
-              {{ post.title }}
-            </h2>
-            <p v-if="post.excerpt" class="text-sm text-zinc-500 dark:text-zinc-400 line-clamp-2">
-              {{ post.excerpt }}
-            </p>
-            <div v-if="post.tags" class="flex flex-wrap gap-1.5 pt-0.5">
-              <span
-                v-for="tag in post.tags.split(',')"
-                :key="tag"
-                class="text-xs px-2 py-0.5 rounded-full bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400"
-              >
-                {{ tag.trim() }}
+        <!-- Cover image or fallback gradient -->
+        <div class="absolute inset-0">
+          <img
+            v-if="post.cover_image"
+            :src="post.cover_image"
+            :alt="post.title"
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          <div
+            v-else
+            class="w-full h-full bg-gradient-to-br from-violet-950 via-zinc-900 to-zinc-950"
+          />
+          <!-- Gradient overlay for readability -->
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/10" />
+        </div>
+
+        <!-- Content -->
+        <div class="relative flex flex-col justify-end h-full p-5 space-y-2">
+          <!-- Tags -->
+          <div v-if="post.tags" class="flex flex-wrap gap-1.5">
+            <span
+              v-for="tag in post.tags.split(',')"
+              :key="tag"
+              class="text-[10px] px-2 py-0.5 rounded-full bg-violet-500/30 text-violet-200 backdrop-blur-sm border border-violet-400/20"
+            >{{ tag.trim() }}</span>
+          </div>
+
+          <h2 class="font-bold text-white text-base leading-snug group-hover:text-violet-200 transition-colors">
+            {{ post.title }}
+          </h2>
+
+          <p v-if="post.excerpt" class="text-xs text-zinc-300/80 line-clamp-2 leading-relaxed">
+            {{ post.excerpt }}
+          </p>
+
+          <div class="flex items-center justify-between pt-1">
+            <div class="flex items-center gap-2 text-xs text-zinc-400">
+              <span>{{ formatDate(post.created_at) }}</span>
+              <span class="text-zinc-600">·</span>
+              <span class="flex items-center gap-1">
+                <span class="i-lucide-clock w-3 h-3" />
+                {{ readingTime(post.content) }}
               </span>
             </div>
+            <span class="text-xs text-violet-300 group-hover:text-violet-200 transition-colors flex items-center gap-1">
+              Read
+              <span class="i-lucide-arrow-right w-3 h-3 transition-transform group-hover:translate-x-0.5" />
+            </span>
           </div>
-          <span class="text-xs text-zinc-400 shrink-0 mt-0.5">{{ formatDate(post.created_at) }}</span>
         </div>
       </RouterLink>
     </div>

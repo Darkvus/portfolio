@@ -45,8 +45,27 @@ const formError  = ref('')
 const formSuccess = ref('')
 
 const emptyForm = () => ({
-  title: '', slug: '', content: '', excerpt: '', tags: '', published: false,
+  title: '', slug: '', content: '', excerpt: '', tags: '', cover_image: '', published: false,
 })
+
+const coverPreview = ref('')
+const coverUploading = ref(false)
+
+async function onCoverChange(e) {
+  const file = e.target.files[0]
+  if (!file) return
+  coverUploading.value = true
+  try {
+    const result = await uploadImage(file, token.value)
+    const url = `${import.meta.env.VITE_API_URL || 'http://localhost:8000'}${result.url}`
+    form.value.cover_image = url
+    coverPreview.value = url
+  } catch (err) {
+    formError.value = 'Cover upload failed: ' + err.message
+  } finally {
+    coverUploading.value = false
+  }
+}
 const form = ref(emptyForm())
 
 function formatDate(dateStr) {
@@ -74,13 +93,15 @@ function openNewForm() {
 function editPost(post) {
   editingPost.value = post
   form.value = {
-    title:     post.title,
-    slug:      post.slug,
-    content:   post.content,
-    excerpt:   post.excerpt || '',
-    tags:      post.tags || '',
-    published: post.published,
+    title:       post.title,
+    slug:        post.slug,
+    content:     post.content,
+    excerpt:     post.excerpt || '',
+    tags:        post.tags || '',
+    cover_image: post.cover_image || '',
+    published:   post.published,
   }
+  coverPreview.value = post.cover_image || ''
   showForm.value = true
   formError.value = ''
   formSuccess.value = ''
@@ -91,6 +112,7 @@ function cancelForm() {
   showForm.value = false
   editingPost.value = null
   form.value = emptyForm()
+  coverPreview.value = ''
 }
 
 async function submitPost() {
@@ -298,6 +320,29 @@ onMounted(() => {
                   type="text" placeholder="Short description..."
                   class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
                 />
+              </div>
+
+              <!-- Cover image -->
+              <div class="sm:col-span-2 space-y-2">
+                <label class="text-xs text-zinc-500">Cover image <span class="text-zinc-400">(card background)</span></label>
+                <div class="flex items-center gap-3">
+                  <label class="flex items-center gap-2 px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 hover:border-violet-400 cursor-pointer text-sm text-zinc-500 dark:text-zinc-400 transition-colors">
+                    <span class="i-lucide-image w-4 h-4" />
+                    <span>{{ coverUploading ? 'Uploading...' : 'Upload image' }}</span>
+                    <input type="file" accept="image/*" class="hidden" @change="onCoverChange" :disabled="coverUploading" />
+                  </label>
+                  <span v-if="form.cover_image" class="text-xs text-green-500 font-mono">✓ image set</span>
+                  <button
+                    v-if="form.cover_image"
+                    type="button"
+                    @click="form.cover_image = ''; coverPreview = ''"
+                    class="text-xs text-red-400 hover:text-red-300"
+                  >remove</button>
+                </div>
+                <div v-if="coverPreview" class="relative h-32 rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-700">
+                  <img :src="coverPreview" class="w-full h-full object-cover" />
+                  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                </div>
               </div>
             </div>
 

@@ -35,7 +35,6 @@ onMounted(async () => {
 
     <!-- Hero -->
     <div class="space-y-6 pt-6">
-      <p class="font-mono text-sm text-violet-500 select-none">$ whoami</p>
       <div class="flex items-center gap-6">
         <div class="space-y-3 flex-1">
           <h1 class="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">

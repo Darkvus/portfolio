@@ -76,17 +76,41 @@ onMounted(async () => {
 </template>
 
 <style>
-/* Fix word-wrap inside md-editor-v3 MdPreview */
-.md-post-content,
-.md-post-content .md-editor-preview-wrapper,
-.md-post-content .md-editor-preview {
+/*
+ * MdPreview root element has classes:
+ *   md-editor-v3  md-editor-v3-previewOnly  [md-editor-v3-dark]
+ * Inner wrapper: .md-editor-v3-preview-wrapper
+ * Preview div:   .md-editor-v3-preview
+ */
+
+/* ── Root & wrappers: fully transparent ── */
+.md-post-content.md-editor-v3,
+.md-post-content .md-editor-v3-preview-wrapper,
+.md-post-content .md-editor-v3-preview {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+/* ── Reset CSS custom properties (light + dark) ── */
+.md-post-content .md-editor-v3-preview {
+  --md-theme-bg-color: transparent !important;
+  --md-theme-bg-color-inset: transparent !important;
+  --md-theme-border-color: transparent !important;
+  --md-theme-border-color-reverse: transparent !important;
+  --md-theme-border-color-inset: transparent !important;
+}
+
+/* ── Word-wrap for all text content ── */
+.md-post-content .md-editor-v3-preview {
   word-break: break-word;
   overflow-wrap: break-word;
   max-width: 100%;
   overflow-x: hidden;
 }
 
-/* Code blocks: horizontal scroll, no forced line breaks */
+/* ── Code blocks: scroll horizontally, no forced breaks ── */
 .md-post-content pre {
   word-break: normal;
   overflow-wrap: normal;
@@ -101,7 +125,7 @@ onMounted(async () => {
   white-space: pre;
 }
 
-/* Inline code can wrap */
+/* ── Inline code: allow wrapping ── */
 .md-post-content p code,
 .md-post-content li code,
 .md-post-content td code {
@@ -109,7 +133,7 @@ onMounted(async () => {
   white-space: normal;
 }
 
-/* Tables: horizontal scroll on small screens */
+/* ── Tables: horizontal scroll on small screens ── */
 .md-post-content table {
   display: block;
   overflow-x: auto;

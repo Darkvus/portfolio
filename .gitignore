@@ -24,6 +24,14 @@ env/
 *.db
 *.sqlite
 *.sqlite3
+*.db-shm
+*.db-wal
+local.db
+*.db*
+local.db-shm
+local.db-wal
+backend/portfolio.db
+backend/local.db
 
 # ── Node / Frontend ───────────────────────────────────────────
 node_modules/

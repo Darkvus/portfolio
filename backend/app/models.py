@@ -24,8 +24,9 @@ class Post(Base):
     slug       = Column(String(200), unique=True, nullable=False, index=True)
     content    = Column(Text, nullable=False)
     excerpt    = Column(String(500), nullable=True)
-    tags       = Column(String(500), nullable=True)
-    published  = Column(Boolean, default=False, nullable=False)
+    tags         = Column(String(500), nullable=True)
+    cover_image  = Column(String(500), nullable=True)
+    published    = Column(Boolean, default=False, nullable=False)
     created_at = Column(DateTime(timezone=True), default=utcnow, nullable=False)
     updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
 
