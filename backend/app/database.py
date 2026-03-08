@@ -12,6 +12,9 @@ if TURSO_URL and TURSO_TOKEN:
     def _creator():
         conn = libsql.connect("local.db", sync_url=TURSO_URL, auth_token=TURSO_TOKEN)
         conn.sync()
+        # SQLAlchemy's pysqlite dialect requires create_function for REGEXP support
+        if not hasattr(conn, "create_function"):
+            conn.create_function = lambda *args, **kwargs: None
         return conn
 
     engine = create_engine(
