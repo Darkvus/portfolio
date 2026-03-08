@@ -134,7 +134,7 @@ onMounted(() => {
             type="text"
             required
             autocomplete="username"
-            class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm focus:outline-none focus:border-violet-400 transition-colors"
+            class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
           />
         </div>
         <div class="space-y-1">
@@ -144,7 +144,7 @@ onMounted(() => {
             type="password"
             required
             autocomplete="current-password"
-            class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm focus:outline-none focus:border-violet-400 transition-colors"
+            class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
           />
         </div>
         <button
@@ -205,7 +205,7 @@ onMounted(() => {
               v-model="form.title"
               type="text"
               placeholder="Post title"
-              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm focus:outline-none focus:border-violet-400 transition-colors"
+              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
             />
           </div>
           <div class="space-y-1">
@@ -214,7 +214,7 @@ onMounted(() => {
               v-model="form.slug"
               type="text"
               placeholder="my-post-slug"
-              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm font-mono focus:outline-none focus:border-violet-400 transition-colors"
+              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
             />
           </div>
           <div class="space-y-1">
@@ -223,7 +223,7 @@ onMounted(() => {
               v-model="form.tags"
               type="text"
               placeholder="python, fastapi, tutorial"
-              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm focus:outline-none focus:border-violet-400 transition-colors"
+              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
             />
           </div>
           <div class="sm:col-span-2 space-y-1">
@@ -232,7 +232,7 @@ onMounted(() => {
               v-model="form.excerpt"
               type="text"
               placeholder="Short description..."
-              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm focus:outline-none focus:border-violet-400 transition-colors"
+              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
             />
           </div>
           <div class="sm:col-span-2 space-y-1">
@@ -241,7 +241,7 @@ onMounted(() => {
               v-model="form.content"
               rows="14"
               placeholder="# My Post&#10;&#10;Write your content in **Markdown**..."
-              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm font-mono leading-relaxed focus:outline-none focus:border-violet-400 transition-colors resize-y"
+              class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm font-mono leading-relaxed text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors resize-y"
             ></textarea>
           </div>
         </div>

@@ -36,11 +36,12 @@ onMounted(async () => {
 
     <div v-if="loading" class="text-sm text-zinc-400 font-mono">loading posts...</div>
 
-    <div v-else-if="error" class="text-sm text-red-400 font-mono">// error: {{ error }}</div>
-
-    <div v-else-if="posts.length === 0" class="py-16 text-center">
-      <p class="font-mono text-zinc-400 text-sm">// no posts yet</p>
-      <p class="text-zinc-400 text-xs mt-2">Come back soon!</p>
+    <div v-else-if="error || posts.length === 0" class="py-20 flex flex-col items-center gap-4 text-center">
+      <span class="i-lucide-scroll-text w-12 h-12 text-zinc-300 dark:text-zinc-700" />
+      <div class="space-y-1">
+        <p class="font-mono text-sm text-zinc-500 dark:text-zinc-400">// nothing here yet</p>
+        <p class="text-xs text-zinc-400 dark:text-zinc-600">Posts are on the way — check back soon.</p>
+      </div>
     </div>
 
     <div v-else class="space-y-3">

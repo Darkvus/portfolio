@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, provide } from 'vue'
 import NavBar from './components/NavBar.vue'
+import Terminal from './components/Terminal.vue'
 
 const isDark = ref(false)
 
@@ -23,5 +24,6 @@ provide('theme', { isDark, toggleTheme })
     <main class="max-w-3xl mx-auto px-6 pt-24 pb-20">
       <RouterView />
     </main>
+    <Terminal />
   </div>
 </template>

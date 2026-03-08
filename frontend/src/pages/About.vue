@@ -70,14 +70,24 @@ const skills = [
     <!-- Contact -->
     <div class="space-y-4">
       <p class="font-mono text-xs text-zinc-400">// contact</p>
-      <div class="flex flex-col gap-2">
+      <div class="flex flex-col gap-3">
         <a
           href="https://github.com/Darkvus"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-violet-500 transition-colors w-fit"
         >
-          GitHub · github.com/Darkvus →
+          <span class="i-simple-icons-github w-4 h-4" />
+          self →
+        </a>
+        <a
+          href="https://www.linkedin.com/in/alejandro-jose-c-66010aa1/"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 text-sm text-zinc-600 dark:text-zinc-400 hover:text-[#0077b5] transition-colors w-fit"
+        >
+          <span class="i-simple-icons-linkedin w-4 h-4" />
+          self →
         </a>
       </div>
     </div>

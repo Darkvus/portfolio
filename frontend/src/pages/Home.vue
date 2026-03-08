@@ -35,31 +35,47 @@ onMounted(async () => {
     <!-- Hero -->
     <div class="space-y-6 pt-6">
       <p class="font-mono text-sm text-violet-500 select-none">$ whoami</p>
-      <div class="space-y-3">
-        <h1 class="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">
-          Alejandro<br />Caraballo
-        </h1>
-        <p class="text-xl text-zinc-400 dark:text-zinc-400 font-light">
-          Backend Developer · Python Enthusiast
-        </p>
+      <div class="flex items-center gap-6">
+        <div class="space-y-3 flex-1">
+          <h1 class="text-4xl sm:text-5xl font-bold tracking-tight leading-tight">
+            Alejandro<br />Caraballo
+          </h1>
+          <p class="text-xl text-zinc-400 font-light">
+            Backend Developer · Python Enthusiast
+          </p>
+        </div>
+        <img
+          src="/favicon.png"
+          alt="Alejandro Caraballo"
+          class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover ring-2 ring-violet-500/30 shrink-0"
+        />
       </div>
       <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-base">
         I build robust, efficient, and scalable backend systems. Passionate about
         Python, clean APIs, and solving complex problems with maintainable solutions.
       </p>
-      <div class="flex flex-wrap gap-3">
+      <div class="flex flex-wrap items-center gap-3">
         <a
           href="https://github.com/Darkvus"
           target="_blank"
           rel="noopener"
           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 dark:bg-zinc-100 text-zinc-100 dark:text-zinc-900 text-sm font-medium hover:opacity-80 transition-opacity"
         >
-          GitHub →
+          <span class="i-simple-icons-github w-5 h-5" />
+        </a>
+        <a
+          href="https://www.linkedin.com/in/alejandro-jose-c-66010aa1/"
+          target="_blank"
+          rel="noopener"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0077b5] text-white text-sm font-medium hover:opacity-80 transition-opacity"
+        >
+          <span class="i-simple-icons-linkedin w-5 h-5" />
         </a>
         <RouterLink
           to="/about"
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 text-sm font-medium hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium text-zinc-600 dark:text-zinc-400 hover:text-violet-500 transition-colors"
         >
+          <span class="i-lucide-user w-5 h-5" />
           About me
         </RouterLink>
       </div>
