@@ -2,6 +2,7 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { getPosts } from '../api/index.js'
+import NewsletterSignup from '../components/NewsletterSignup.vue'
 
 const posts = ref([])
 const loading = ref(true)
@@ -127,6 +128,9 @@ onMounted(async () => {
         </RouterLink>
       </div>
     </div>
+
+    <!-- Newsletter -->
+    <NewsletterSignup />
 
   </section>
 </template>

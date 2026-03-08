@@ -1,17 +1,15 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, inject, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { marked } from 'marked'
+import { MdPreview } from 'md-editor-v3'
+import 'md-editor-v3/lib/preview.css'
 import { getPost } from '../api/index.js'
 
-const route = useRoute()
-const post = ref(null)
+const { isDark } = inject('theme')
+const route   = useRoute()
+const post    = ref(null)
 const loading = ref(true)
 const notFound = ref(false)
-
-const renderedContent = computed(() =>
-  post.value ? marked.parse(post.value.content) : ''
-)
 
 function formatDate(dateStr) {
   return new Date(dateStr).toLocaleDateString('en-US', {
@@ -57,9 +55,7 @@ onMounted(async () => {
                   v-for="tag in post.tags.split(',')"
                   :key="tag"
                   class="px-2 py-0.5 rounded-full bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400 text-xs"
-                >
-                  {{ tag.trim() }}
-                </span>
+                >{{ tag.trim() }}</span>
               </div>
             </template>
           </div>
@@ -67,11 +63,13 @@ onMounted(async () => {
         <div class="border-b border-zinc-100 dark:border-zinc-800/60"></div>
       </header>
 
-      <!-- Rendered Markdown -->
-      <div
-        class="prose prose-zinc dark:prose-invert prose-a:text-violet-500 prose-a:no-underline hover:prose-a:underline prose-code:text-violet-500 prose-code:bg-zinc-100 dark:prose-code:bg-zinc-800 prose-code:px-1 prose-code:py-0.5 prose-code:rounded prose-pre:bg-zinc-900 prose-pre:border prose-pre:border-zinc-800 max-w-none"
-        v-html="renderedContent"
-      ></div>
+      <MdPreview
+        :model-value="post.content"
+        :theme="isDark ? 'dark' : 'light'"
+        preview-theme="github"
+        language="en-US"
+        style="background: transparent; padding: 0;"
+      />
     </article>
   </div>
 </template>

@@ -44,3 +44,31 @@ export const deletePost = (id, token) =>
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   })
+
+export const uploadImage = async (file, token) => {
+  const form = new FormData()
+  form.append('file', file)
+  const res = await fetch(`${API_BASE}/uploads/image`, {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}` },
+    body: form,
+  })
+  if (!res.ok) throw new Error('Upload failed')
+  return res.json()
+}
+
+export const subscribe = (email) =>
+  req('/newsletter/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email }),
+  })
+
+export const getSubscribers = (token) =>
+  req('/newsletter/subscribers', { headers: { Authorization: `Bearer ${token}` } })
+
+export const deleteSubscriber = (id, token) =>
+  req(`/newsletter/subscribers/${id}`, {
+    method: 'DELETE',
+    headers: { Authorization: `Bearer ${token}` },
+  })

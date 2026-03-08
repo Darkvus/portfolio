@@ -4,7 +4,7 @@ from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..database import get_db
-from ..models import Post
+from ..models import Post, PostImage
 from ..schemas import PostCreate, PostUpdate, PostOut
 from ..auth import get_current_admin
 
@@ -16,6 +16,16 @@ def slugify(text: str) -> str:
     text = re.sub(r"[^\w\s-]", "", text)
     text = re.sub(r"[\s_]+", "-", text)
     return re.sub(r"-+", "-", text).strip("-")
+
+
+def link_images(content: str, post_id: int, db: Session) -> None:
+    """Find /uploads/{filename} references in markdown and set their post_id."""
+    filenames = re.findall(r"/uploads/([^\s\)\"']+)", content)
+    if filenames:
+        db.query(PostImage).filter(
+            PostImage.filename.in_(filenames),
+            PostImage.post_id.is_(None),
+        ).update({"post_id": post_id}, synchronize_session=False)
 
 
 # ── Public endpoints ──────────────────────────────────────────────────────────
@@ -68,6 +78,8 @@ def create_post(
     db.add(post)
     db.commit()
     db.refresh(post)
+    link_images(post.content, post.id, db)
+    db.commit()
     return post
 
 
@@ -86,6 +98,9 @@ def update_post(
     post.updated_at = datetime.now(timezone.utc)
     db.commit()
     db.refresh(post)
+    if post.content:
+        link_images(post.content, post.id, db)
+        db.commit()
     return post
 
 

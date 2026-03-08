@@ -2,10 +2,28 @@ import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, DeclarativeBase
 
-DATABASE_URL = os.getenv("DATABASE_URL", "sqlite:///./portfolio.db")
+TURSO_URL   = os.getenv("TURSO_DATABASE_URL")
+TURSO_TOKEN = os.getenv("TURSO_AUTH_TOKEN")
 
-connect_args = {"check_same_thread": False} if DATABASE_URL.startswith("sqlite") else {}
-engine = create_engine(DATABASE_URL, connect_args=connect_args)
+if TURSO_URL and TURSO_TOKEN:
+    # Production: Turso (libSQL) — drop-in SQLite replacement
+    import libsql_experimental as libsql
+
+    def _creator():
+        conn = libsql.connect("local.db", sync_url=TURSO_URL, auth_token=TURSO_TOKEN)
+        conn.sync()
+        return conn
+
+    engine = create_engine(
+        "sqlite+pysqlite:///:memory:",
+        creator=_creator,
+        connect_args={"check_same_thread": False},
+    )
+else:
+    # Local dev: plain SQLite
+    _url = os.getenv("DATABASE_URL", "sqlite:///./portfolio.db")
+    engine = create_engine(_url, connect_args={"check_same_thread": False})
+
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 

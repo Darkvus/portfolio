@@ -35,6 +35,22 @@ class PostOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class SubscribeRequest(BaseModel):
+    email: str
+
+
+class SubscribeOut(BaseModel):
+    message: str
+
+
+class SubscriberOut(BaseModel):
+    id: int
+    email: str
+    created_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"
