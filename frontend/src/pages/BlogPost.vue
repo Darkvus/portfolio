@@ -68,8 +68,51 @@ onMounted(async () => {
         :theme="isDark ? 'dark' : 'light'"
         preview-theme="github"
         language="en-US"
+        class="md-post-content"
         style="background: transparent; padding: 0;"
       />
     </article>
   </div>
 </template>
+
+<style>
+/* Fix word-wrap inside md-editor-v3 MdPreview */
+.md-post-content,
+.md-post-content .md-editor-preview-wrapper,
+.md-post-content .md-editor-preview {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Code blocks: horizontal scroll, no forced line breaks */
+.md-post-content pre {
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: pre;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.md-post-content pre code {
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: pre;
+}
+
+/* Inline code can wrap */
+.md-post-content p code,
+.md-post-content li code,
+.md-post-content td code {
+  word-break: break-all;
+  white-space: normal;
+}
+
+/* Tables: horizontal scroll on small screens */
+.md-post-content table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+</style>
