@@ -53,6 +53,16 @@ def list_posts(
     return posts
 
 
+# ── Admin endpoints ───────────────────────────────────────────────────────────
+
+@router.get("/all", response_model=List[PostAdminOut])
+def list_all_posts(
+    db: Session = Depends(get_db),
+    _: str = Depends(get_current_admin),
+):
+    return db.query(Post).order_by(Post.created_at.desc()).all()
+
+
 @router.get("/{slug}", response_model=PostOut)
 def get_post(
     slug: str,
@@ -64,16 +74,6 @@ def get_post(
         raise HTTPException(status_code=404, detail="Post not found")
     resolve_content(post, lang)
     return post
-
-
-# ── Admin endpoints ───────────────────────────────────────────────────────────
-
-@router.get("/all", response_model=List[PostAdminOut])
-def list_all_posts(
-    db: Session = Depends(get_db),
-    _: str = Depends(get_current_admin),
-):
-    return db.query(Post).order_by(Post.created_at.desc()).all()
 
 
 @router.post("/", response_model=PostAdminOut, status_code=201)
