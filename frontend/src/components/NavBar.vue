@@ -1,5 +1,5 @@
 <script setup>
-import { inject, ref, onMounted, onUnmounted } from 'vue'
+import { inject } from 'vue'
 import { useRoute, RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
@@ -14,18 +14,6 @@ const pages = [
   { path: '/about',    key: 'nav.about'    },
 ]
 
-const settingsOpen = ref(false)
-const settingsRef  = ref(null)
-
-function onDocClick(e) {
-  if (settingsRef.value && !settingsRef.value.contains(e.target)) {
-    settingsOpen.value = false
-  }
-}
-
-onMounted(()  => document.addEventListener('click', onDocClick))
-onUnmounted(() => document.removeEventListener('click', onDocClick))
-
 function setLang(lang) {
   locale.value = lang
   localStorage.setItem('lang', lang)
@@ -34,7 +22,7 @@ function setLang(lang) {
 
 <template>
   <nav class="fixed top-0 left-0 right-0 z-[100] bg-zinc-950/90 backdrop-blur-sm border-b border-zinc-800">
-    <div class="max-w-3xl mx-auto px-6 h-12 flex items-center gap-2 font-mono text-xs">
+    <div class="max-w-3xl mx-auto px-6 h-12 flex items-center gap-3 font-mono text-xs">
 
       <!-- Prompt -->
       <span class="text-violet-500 shrink-0">darkvus_dev</span>
@@ -57,65 +45,31 @@ function setLang(lang) {
 
       <div class="flex-1" />
 
-      <!-- Language pill toggle -->
-      <div class="flex items-center rounded-full border border-zinc-800 bg-zinc-900 p-0.5 gap-0.5">
-        <button
-          v-for="lang in [{ code: 'en', flag: '🇬🇧' }, { code: 'es', flag: '🇪🇸' }]"
-          :key="lang.code"
-          @click="setLang(lang.code)"
-          class="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono transition-all"
-          :class="locale === lang.code
-            ? 'bg-violet-600 text-white shadow-sm'
-            : 'text-zinc-500 hover:text-zinc-300'"
-        >
-          <span>{{ lang.flag }}</span>
-          <span>{{ lang.code.toUpperCase() }}</span>
-        </button>
-      </div>
+      <!-- Controls -->
+      <div class="flex items-center gap-1">
 
-      <!-- Settings gear -->
-      <div ref="settingsRef" class="relative ml-1">
+        <!-- Language pill -->
+        <div class="flex items-center rounded-md border border-zinc-800 overflow-hidden">
+          <button
+            v-for="lang in [{ code: 'en', label: 'EN' }, { code: 'es', label: 'ES' }]"
+            :key="lang.code"
+            @click="setLang(lang.code)"
+            class="px-2 py-1 text-[10px] font-mono transition-all"
+            :class="locale === lang.code
+              ? 'bg-violet-600 text-white'
+              : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'"
+          >{{ lang.label }}</button>
+        </div>
+
+        <!-- Theme toggle -->
         <button
-          @click.stop="settingsOpen = !settingsOpen"
-          class="p-1 rounded transition-colors"
-          :class="settingsOpen ? 'text-violet-400' : 'text-zinc-500 hover:text-violet-400'"
+          @click="toggleTheme"
+          class="flex items-center justify-center w-7 h-6 rounded-md border border-zinc-800 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
         >
-          <span class="i-lucide-settings w-3.5 h-3.5" />
+          <span class="text-[11px]">{{ isDark ? '☀️' : '🌙' }}</span>
         </button>
 
-        <Transition
-          enter-active-class="transition duration-100 ease-out"
-          enter-from-class="opacity-0 scale-95"
-          enter-to-class="opacity-100 scale-100"
-          leave-active-class="transition duration-75 ease-in"
-          leave-from-class="opacity-100 scale-100"
-          leave-to-class="opacity-0 scale-95"
-        >
-          <div
-            v-if="settingsOpen"
-            class="absolute right-0 top-8 w-36 rounded-xl border border-zinc-800 bg-zinc-950 shadow-xl shadow-black/50 py-1 origin-top-right"
-          >
-            <p class="px-3 pt-1.5 pb-1 text-[10px] font-mono text-zinc-600 uppercase tracking-wider">theme</p>
-            <button
-              @click.stop="isDark || toggleTheme()"
-              class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-mono hover:bg-zinc-800/60 transition-colors"
-              :class="isDark ? 'text-violet-400' : 'text-zinc-400'"
-            >
-              <span>🌙 Dark</span>
-              <span v-if="isDark" class="i-lucide-check w-3 h-3" />
-            </button>
-            <button
-              @click.stop="!isDark || toggleTheme()"
-              class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-mono hover:bg-zinc-800/60 transition-colors"
-              :class="!isDark ? 'text-violet-400' : 'text-zinc-400'"
-            >
-              <span>☀️ Light</span>
-              <span v-if="!isDark" class="i-lucide-check w-3 h-3" />
-            </button>
-          </div>
-        </Transition>
       </div>
-
     </div>
   </nav>
 </template>
