@@ -5,7 +5,7 @@ from fastapi import FastAPI
 load_dotenv()
 from fastapi.middleware.cors import CORSMiddleware
 from .database import Base, engine
-from .routers import auth, posts, newsletter, uploads
+from .routers import auth, posts, newsletter, uploads, profile
 
 Base.metadata.create_all(bind=engine)
 
@@ -34,6 +34,7 @@ app.include_router(auth.router)
 app.include_router(posts.router)
 app.include_router(newsletter.router)
 app.include_router(uploads.router)
+app.include_router(profile.router)
 
 
 @app.get("/health", tags=["health"])

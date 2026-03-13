@@ -8,6 +8,14 @@ def utcnow():
     return datetime.now(timezone.utc)
 
 
+class ProfileConfig(Base):
+    __tablename__ = "profile_config"
+
+    key        = Column(String(100), primary_key=True)
+    value      = Column(Text, nullable=True)
+    updated_at = Column(DateTime(timezone=True), default=utcnow, onupdate=utcnow, nullable=False)
+
+
 class Subscriber(Base):
     __tablename__ = "subscribers"
 

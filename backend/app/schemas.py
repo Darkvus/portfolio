@@ -72,6 +72,18 @@ class SubscriberOut(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class ProfileOut(BaseModel):
+    open_to_work: bool
+    location: str
+    available_from: Optional[str]
+
+
+class ProfileUpdate(BaseModel):
+    open_to_work: Optional[bool] = None
+    location: Optional[str] = None
+    available_from: Optional[str] = None
+
+
 class Token(BaseModel):
     access_token: str
     token_type: str = "bearer"

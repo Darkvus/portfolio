@@ -26,6 +26,34 @@ const skills = [
   },
 ]
 
+const education = [
+  {
+    title:       { en: "Master's in Cybersecurity",          es: 'Máster en Ciberseguridad' },
+    institution: 'UNIR',
+    year:        null, // in progress
+  },
+  {
+    title:       { en: 'Bachelor\'s in Computer Engineering', es: 'Grado en Ingeniería Informática' },
+    institution: 'Universidad de Cádiz',
+    year:        '2018',
+  },
+  {
+    title:       { en: 'Cisco Certified Network Professional (CCNP)', es: 'Cisco Certified Network Professional (CCNP)' },
+    institution: 'Cisco',
+    year:        '2018',
+  },
+  {
+    title:       { en: 'Cisco Certified Network Associate (CCNA 1)', es: 'Cisco Certified Network Associate (CCNA 1)' },
+    institution: 'Cisco',
+    year:        '2017',
+  },
+  {
+    title:       { en: 'English B1 — APTIS', es: 'Inglés B1 — APTIS' },
+    institution: 'British Council',
+    year:        null,
+  },
+]
+
 const experience = [
   {
     role:    { en: 'Senior Python/Django Developer', es: 'Desarrollador Senior Python/Django' },
@@ -152,6 +180,27 @@ const experience = [
               </li>
             </ul>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education & Certifications -->
+    <div class="space-y-4">
+      <p class="font-mono text-xs text-zinc-400">{{ t('about.education') }}</p>
+      <div class="space-y-2">
+        <div
+          v-for="(item, i) in education"
+          :key="i"
+          class="flex items-start justify-between gap-4 p-4 rounded-xl border border-zinc-100 dark:border-zinc-800/60"
+        >
+          <div class="space-y-0.5 min-w-0">
+            <p class="text-sm font-medium text-zinc-200 truncate">{{ item.title[locale] ?? item.title.en }}</p>
+            <p class="text-xs font-mono text-zinc-500">{{ item.institution }}</p>
+          </div>
+          <span class="text-xs font-mono text-zinc-500 shrink-0 mt-0.5">
+            <span v-if="item.year === null && item.title.en.includes('Master')" class="text-violet-400">{{ t('about.inProgress') }}</span>
+            <span v-else-if="item.year">{{ item.year }}</span>
+          </span>
         </div>
       </div>
     </div>

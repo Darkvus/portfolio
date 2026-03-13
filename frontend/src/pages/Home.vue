@@ -2,12 +2,13 @@
 import { ref, onMounted } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { getPosts } from '../api/index.js'
+import { getPosts, getProfile } from '../api/index.js'
 import NewsletterSignup from '../components/NewsletterSignup.vue'
 
 const { t, locale } = useI18n()
 const posts = ref([])
 const loading = ref(true)
+const profile = ref({ open_to_work: false, location: '', available_from: null })
 
 const stack = [
   'Python', 'FastAPI', 'Django', 'Typer',
@@ -29,6 +30,11 @@ onMounted(async () => {
   } finally {
     loading.value = false
   }
+  try {
+    profile.value = await getProfile()
+  } catch {
+    // API unavailable — defaults stay
+  }
 })
 </script>
 
@@ -45,6 +51,23 @@ onMounted(async () => {
           <p class="text-xl text-zinc-400 font-light">
             {{ t('home.role') }}
           </p>
+          <!-- Status badges -->
+          <div class="flex flex-wrap gap-2">
+            <span
+              v-if="profile.open_to_work"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-950/60 text-emerald-400 border border-emerald-800/60"
+            >
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              {{ t('home.openToWork') }}
+            </span>
+            <span
+              v-if="profile.location"
+              class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-mono bg-zinc-800/60 text-zinc-400 border border-zinc-700/60"
+            >
+              <span class="i-lucide-map-pin w-3 h-3" />
+              {{ profile.location }}
+            </span>
+          </div>
         </div>
         <img
           src="/darkvus.png"
@@ -71,6 +94,14 @@ onMounted(async () => {
           class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#0077b5] text-white text-sm font-medium hover:opacity-80 transition-opacity"
         >
           <span class="i-simple-icons-linkedin w-5 h-5" />
+        </a>
+        <a
+          href="/Alejandro_J_Caraballo_Garcia_CV.pdf"
+          download
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors"
+        >
+          <span class="i-lucide-download w-4 h-4" />
+          CV
         </a>
         <RouterLink
           to="/about"

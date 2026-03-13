@@ -5,6 +5,7 @@ import 'md-editor-v3/lib/style.css'
 import {
   login, getAllPosts, createPost, updatePost, deletePost,
   getSubscribers, deleteSubscriber, uploadImage,
+  getProfile, updateProfile,
 } from '../api/index.js'
 
 const { isDark } = inject('theme')
@@ -35,7 +36,7 @@ function logout() {
 }
 
 // ── Tabs ──────────────────────────────────────────────────────
-const activeTab = ref('posts') // posts | newsletter
+const activeTab = ref('posts') // posts | newsletter | profile
 
 // ── Posts ─────────────────────────────────────────────────────
 const posts      = ref([])
@@ -175,6 +176,34 @@ async function removeSubscriber(id, email) {
   }
 }
 
+// ── Profile ───────────────────────────────────────────────────
+const profileForm    = ref({ open_to_work: false, location: '', available_from: '' })
+const profileSaved   = ref(false)
+const profileError   = ref('')
+
+async function loadProfile() {
+  try {
+    const p = await getProfile()
+    profileForm.value = { ...p, available_from: p.available_from ?? '' }
+  } catch {}
+}
+
+async function saveProfile() {
+  profileSaved.value = false
+  profileError.value = ''
+  try {
+    await updateProfile({
+      open_to_work:   profileForm.value.open_to_work,
+      location:       profileForm.value.location,
+      available_from: profileForm.value.available_from || null,
+    }, token.value)
+    profileSaved.value = true
+    setTimeout(() => { profileSaved.value = false }, 2500)
+  } catch (e) {
+    profileError.value = e.message
+  }
+}
+
 async function onUploadImg(files, callback) {
   const results = await Promise.all(
     files.map(f => uploadImage(f, token.value))
@@ -183,7 +212,7 @@ async function onUploadImg(files, callback) {
 }
 
 onMounted(() => {
-  if (token.value) { loadPosts(); loadSubscribers() }
+  if (token.value) { loadPosts(); loadSubscribers(); loadProfile() }
 })
 </script>
 
@@ -259,6 +288,7 @@ onMounted(() => {
           v-for="tab in [
             { id: 'posts',      label: '📄 posts',      count: posts.length },
             { id: 'newsletter', label: '✉ newsletter',  count: subscribers.length },
+            { id: 'profile',    label: '👤 profile',    count: null },
           ]"
           :key="tab.id"
           @click="activeTab = tab.id; cancelForm()"
@@ -271,6 +301,7 @@ onMounted(() => {
         >
           {{ tab.label }}
           <span
+            v-if="tab.count !== null"
             :class="[
               'px-1.5 py-0.5 rounded font-mono text-[10px]',
               activeTab === tab.id ? 'bg-violet-600/30 text-violet-400' : 'bg-zinc-800 text-zinc-600',
@@ -473,6 +504,70 @@ onMounted(() => {
               class="text-xs px-3 py-1.5 rounded-lg border border-red-200 dark:border-red-900/60 text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30 transition-colors shrink-0"
             >Remove</button>
           </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TAB: PROFILE ── -->
+      <div v-if="activeTab === 'profile'" class="space-y-6">
+        <div class="rounded-xl border border-zinc-200 dark:border-zinc-700 overflow-hidden">
+          <div class="px-5 py-3 border-b border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-900/50">
+            <p class="font-mono text-sm text-violet-500">// profile settings</p>
+          </div>
+          <div class="p-5 space-y-5">
+
+            <!-- Open to work toggle -->
+            <div class="flex items-center justify-between">
+              <div class="space-y-0.5">
+                <p class="text-sm font-medium">Open to work</p>
+                <p class="text-xs text-zinc-400 font-mono">Shows green badge on homepage</p>
+              </div>
+              <button
+                @click="profileForm.open_to_work = !profileForm.open_to_work"
+                :class="[
+                  'relative inline-flex h-6 w-11 items-center rounded-full transition-colors',
+                  profileForm.open_to_work ? 'bg-emerald-500' : 'bg-zinc-600',
+                ]"
+              >
+                <span
+                  :class="[
+                    'inline-block h-4 w-4 transform rounded-full bg-white transition-transform',
+                    profileForm.open_to_work ? 'translate-x-6' : 'translate-x-1',
+                  ]"
+                />
+              </button>
+            </div>
+
+            <!-- Location -->
+            <div class="space-y-1">
+              <label class="text-xs text-zinc-500">Location</label>
+              <input
+                v-model="profileForm.location"
+                type="text"
+                placeholder="Cádiz, Spain"
+                class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
+              />
+            </div>
+
+            <!-- Available from -->
+            <div class="space-y-1">
+              <label class="text-xs text-zinc-500">Available from <span class="text-zinc-400">(optional, e.g. "March 2026")</span></label>
+              <input
+                v-model="profileForm.available_from"
+                type="text"
+                placeholder="Immediately / March 2026"
+                class="w-full px-3 py-2 rounded-lg border border-zinc-200 dark:border-zinc-700 bg-transparent text-sm text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-violet-400 transition-colors"
+              />
+            </div>
+
+            <div class="flex items-center gap-3 pt-1">
+              <button
+                @click="saveProfile"
+                class="px-5 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-medium transition-colors"
+              >Save</button>
+              <span v-if="profileSaved"  class="text-xs text-emerald-500 font-mono">// saved!</span>
+              <span v-if="profileError"  class="text-xs text-red-400 font-mono">// error: {{ profileError }}</span>
+            </div>
           </div>
         </div>
       </div>

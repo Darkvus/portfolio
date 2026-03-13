@@ -13,7 +13,8 @@ export default {
     recent:  '// recent posts',
     viewAll: 'view all →',
     loading: 'loading...',
-    noPosts: '// no posts yet — check back soon',
+    noPosts:    '// no posts yet — check back soon',
+    openToWork: 'open to work',
   },
   projects: {
     title:         'Projects',
@@ -41,8 +42,10 @@ export default {
     skills:     '// skills',
     experience: '// experience',
     contact:    '// contact',
-    downloadCV: 'Download CV',
-    present:    'present',
+    downloadCV:   'Download CV',
+    present:      'present',
+    education:    '// education & certifications',
+    inProgress:   'In progress',
   },
   post: {
     back:     '← Blog',

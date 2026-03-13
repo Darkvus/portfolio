@@ -72,3 +72,13 @@ export const deleteSubscriber = (id, token) =>
     method: 'DELETE',
     headers: { Authorization: `Bearer ${token}` },
   })
+
+export const getProfile = () =>
+  req('/profile/')
+
+export const updateProfile = (data, token) =>
+  req('/profile/', {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+    body: JSON.stringify(data),
+  })

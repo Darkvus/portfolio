@@ -13,7 +13,8 @@ export default {
     recent:  '// publicaciones recientes',
     viewAll: 'ver todas →',
     loading: 'cargando...',
-    noPosts: '// aún no hay publicaciones — vuelve pronto',
+    noPosts:    '// aún no hay publicaciones — vuelve pronto',
+    openToWork: 'disponible',
   },
   projects: {
     title:         'Proyectos',
@@ -41,8 +42,10 @@ export default {
     skills:     '// habilidades',
     experience: '// experiencia',
     contact:    '// contacto',
-    downloadCV: 'Descargar CV',
-    present:    'actualidad',
+    downloadCV:   'Descargar CV',
+    present:      'actualidad',
+    education:    '// educación y certificaciones',
+    inProgress:   'En curso',
   },
   post: {
     back:     '← Blog',
