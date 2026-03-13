@@ -1,6 +1,6 @@
 export default {
   nav: {
-    home:     'cd home',
+    home:     'cd /',
     blog:     'cd blog',
     projects: 'cd projects',
     about:    'cd about',
@@ -18,7 +18,7 @@ export default {
   },
   projects: {
     title:         'Projects',
-    description:   '// public repos on GitHub, sorted by newest',
+    description:   '// public repos on GitHub',
     loading:       'fetching repos...',
     filterAll:     'all',
     repos:         'repositories',

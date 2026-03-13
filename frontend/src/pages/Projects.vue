@@ -25,6 +25,20 @@ const langColors = {
   Java:       '#b07219',
 }
 
+// simple-icons class per language
+const langIcons = {
+  Python:     'i-simple-icons-python',
+  JavaScript: 'i-simple-icons-javascript',
+  TypeScript: 'i-simple-icons-typescript',
+  Vue:        'i-simple-icons-vuedotjs',
+  HTML:       'i-simple-icons-html5',
+  CSS:        'i-simple-icons-css3',
+  Shell:      'i-lucide-terminal',
+  Go:         'i-simple-icons-go',
+  Rust:       'i-simple-icons-rust',
+  Java:       'i-simple-icons-openjdk',
+}
+
 onMounted(async () => {
   try {
     const res = await fetch(
@@ -40,9 +54,13 @@ onMounted(async () => {
   }
 })
 
+const PRIORITY_LANGS = ['Python', 'Vue']
+
 const languages = computed(() => {
   const langs = new Set(repos.value.map(r => r.language).filter(Boolean))
-  return ['all', ...Array.from(langs).sort()]
+  const rest = Array.from(langs).filter(l => !PRIORITY_LANGS.includes(l)).sort()
+  const ordered = [...PRIORITY_LANGS.filter(l => langs.has(l)), ...rest]
+  return ['all', ...ordered]
 })
 
 const filtered = computed(() => {
@@ -92,17 +110,31 @@ function formatStars(n) {
           v-for="lang in languages"
           :key="lang"
           @click="selectedLang = lang"
-          class="px-3 py-1 rounded-full text-xs font-mono transition-all border"
+          :title="lang === 'all' ? t('projects.filterAll') : lang"
+          class="w-8 h-8 flex items-center justify-center rounded-lg transition-all border bg-zinc-900"
           :class="selectedLang === lang
-            ? 'bg-violet-600 border-violet-600 text-white'
-            : 'border-zinc-700 text-zinc-400 hover:border-violet-500 hover:text-violet-400'"
+            ? 'border-violet-500 shadow-sm shadow-violet-900/50'
+            : 'border-zinc-800 hover:border-zinc-600'"
         >
+          <!-- All: grid icon -->
           <span
-            v-if="lang !== 'all'"
-            class="inline-block w-2 h-2 rounded-full mr-1.5 align-middle"
-            :style="{ background: langColors[lang] || '#8b8b8b' }"
+            v-if="lang === 'all'"
+            class="i-lucide-layout-grid w-3.5 h-3.5"
+            :class="selectedLang === 'all' ? 'text-violet-400' : 'text-zinc-500'"
           />
-          {{ lang === 'all' ? t('projects.filterAll') : lang }}
+          <!-- Known icon -->
+          <span
+            v-else-if="langIcons[lang]"
+            :class="langIcons[lang]"
+            class="w-4 h-4 transition-colors"
+            :style="{ color: selectedLang === lang ? langColors[lang] || '#a78bfa' : '#52525b' }"
+          />
+          <!-- Fallback: colored dot -->
+          <span
+            v-else
+            class="inline-block w-2 h-2 rounded-full"
+            :style="{ background: selectedLang === lang ? langColors[lang] || '#8b8b8b' : '#52525b' }"
+          />
         </button>
       </div>
 
