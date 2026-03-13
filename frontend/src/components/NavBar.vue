@@ -53,8 +53,10 @@ function setLang(lang) {
         >{{ locale === 'en' ? 'EN' : 'ES' }}</button>
         <button
           @click="toggleTheme"
-          class="w-8 h-6 flex items-center justify-center text-[11px] text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
-        >{{ isDark ? '☀️' : '🌙' }}</button>
+          class="w-8 h-6 flex items-center justify-center text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
+        >
+          <span :class="isDark ? 'i-lucide-sun' : 'i-lucide-moon'" class="w-3.5 h-3.5" />
+        </button>
       </div>
     </div>
   </nav>
