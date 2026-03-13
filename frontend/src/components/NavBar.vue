@@ -49,11 +49,11 @@ function setLang(lang) {
       <div class="flex items-center rounded-md border border-zinc-800 overflow-hidden">
         <button
           @click="setLang(locale === 'en' ? 'es' : 'en')"
-          class="px-2 py-1 text-[10px] font-mono text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-all border-r border-zinc-800"
+          class="w-8 h-6 flex items-center justify-center text-[10px] font-mono text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800 transition-all border-r border-zinc-800"
         >{{ locale === 'en' ? 'EN' : 'ES' }}</button>
         <button
           @click="toggleTheme"
-          class="px-2 py-1 text-[11px] text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
+          class="w-8 h-6 flex items-center justify-center text-[11px] text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
         >{{ isDark ? '☀️' : '🌙' }}</button>
       </div>
     </div>
