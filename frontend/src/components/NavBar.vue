@@ -45,30 +45,21 @@ function setLang(lang) {
 
       <div class="flex-1" />
 
-      <!-- Controls -->
-      <div class="flex items-center gap-1">
-
-        <!-- Language pill -->
-        <div class="flex items-center rounded-md border border-zinc-800 overflow-hidden">
-          <button
-            v-for="lang in [{ code: 'en', label: 'EN' }, { code: 'es', label: 'ES' }]"
-            :key="lang.code"
-            @click="setLang(lang.code)"
-            class="px-2 py-1 text-[10px] font-mono transition-all"
-            :class="locale === lang.code
-              ? 'bg-violet-600 text-white'
-              : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'"
-          >{{ lang.label }}</button>
-        </div>
-
-        <!-- Theme toggle -->
+      <!-- Unified controls pill -->
+      <div class="flex items-center rounded-md border border-zinc-800 overflow-hidden">
+        <button
+          v-for="lang in [{ code: 'en', label: 'EN' }, { code: 'es', label: 'ES' }]"
+          :key="lang.code"
+          @click="setLang(lang.code)"
+          class="px-2 py-1 text-[10px] font-mono transition-all border-r border-zinc-800"
+          :class="locale === lang.code
+            ? 'bg-violet-600 text-white'
+            : 'text-zinc-500 hover:text-zinc-300 hover:bg-zinc-800'"
+        >{{ lang.label }}</button>
         <button
           @click="toggleTheme"
-          class="flex items-center justify-center w-7 h-6 rounded-md border border-zinc-800 text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
-        >
-          <span class="text-[11px]">{{ isDark ? '☀️' : '🌙' }}</span>
-        </button>
-
+          class="px-2 py-1 text-[11px] text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all"
+        >{{ isDark ? '☀️' : '🌙' }}</button>
       </div>
     </div>
   </nav>

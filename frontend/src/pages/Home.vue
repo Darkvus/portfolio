@@ -69,25 +69,33 @@ onMounted(async () => {
             </span>
           </div>
         </div>
-        <!-- Avatar with open-to-work ring -->
-        <div class="relative shrink-0">
-          <div
-            class="rounded-full p-0.5"
-            :class="profile.open_to_work
-              ? 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600'
-              : 'bg-violet-500/30'"
-          >
-            <img
-              src="/darkvus.png"
-              alt="Alejandro Caraballo"
-              class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover bg-zinc-950"
+        <!-- Avatar -->
+        <div class="flex flex-col items-center gap-1.5 shrink-0">
+          <div class="relative">
+            <div
+              class="rounded-full p-0.5"
+              :class="profile.open_to_work
+                ? 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600'
+                : 'bg-violet-500/30'"
+            >
+              <img
+                src="/darkvus.png"
+                alt="Alejandro Caraballo"
+                class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover bg-zinc-950"
+              />
+            </div>
+            <span
+              v-if="profile.open_to_work"
+              class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-zinc-950 animate-pulse"
             />
           </div>
-          <!-- Green dot indicator -->
           <span
             v-if="profile.open_to_work"
-            class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-zinc-950 animate-pulse"
-          />
+            class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 whitespace-nowrap"
+          >
+            <span class="w-1 h-1 rounded-full bg-emerald-400" />
+            {{ t('home.openToWork') }}
+          </span>
         </div>
       </div>
       <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-base">
