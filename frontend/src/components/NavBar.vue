@@ -33,7 +33,7 @@ watch(() => route.path, () => { menuOpen.value = false })
       <!-- Prompt -->
       <span class="text-violet-500 shrink-0">darkvus_dev</span>
       <span class="text-zinc-600 shrink-0">:</span>
-      <span class="text-blue-400 shrink-0">{{ route.path }}</span>
+      <span class="text-blue-400 truncate min-w-0 max-w-[120px] sm:max-w-[240px]">{{ route.path }}</span>
       <span class="text-zinc-600 shrink-0">$</span>
 
       <!-- Nav links — desktop only -->
