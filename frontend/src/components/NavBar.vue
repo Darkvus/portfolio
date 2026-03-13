@@ -57,8 +57,24 @@ function setLang(lang) {
 
       <div class="flex-1" />
 
+      <!-- Language pill toggle -->
+      <div class="flex items-center rounded-full border border-zinc-800 bg-zinc-900 p-0.5 gap-0.5">
+        <button
+          v-for="lang in [{ code: 'en', flag: '🇬🇧' }, { code: 'es', flag: '🇪🇸' }]"
+          :key="lang.code"
+          @click="setLang(lang.code)"
+          class="flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono transition-all"
+          :class="locale === lang.code
+            ? 'bg-violet-600 text-white shadow-sm'
+            : 'text-zinc-500 hover:text-zinc-300'"
+        >
+          <span>{{ lang.flag }}</span>
+          <span>{{ lang.code.toUpperCase() }}</span>
+        </button>
+      </div>
+
       <!-- Settings gear -->
-      <div ref="settingsRef" class="relative">
+      <div ref="settingsRef" class="relative ml-1">
         <button
           @click.stop="settingsOpen = !settingsOpen"
           class="p-1 rounded transition-colors"
@@ -77,24 +93,8 @@ function setLang(lang) {
         >
           <div
             v-if="settingsOpen"
-            class="absolute right-0 top-8 w-44 rounded-xl border border-zinc-800 bg-zinc-950 shadow-xl shadow-black/50 py-1 origin-top-right"
+            class="absolute right-0 top-8 w-36 rounded-xl border border-zinc-800 bg-zinc-950 shadow-xl shadow-black/50 py-1 origin-top-right"
           >
-            <!-- Language -->
-            <p class="px-3 pt-1.5 pb-1 text-[10px] font-mono text-zinc-600 uppercase tracking-wider">language</p>
-            <button
-              v-for="lang in ['en', 'es']"
-              :key="lang"
-              @click.stop="setLang(lang)"
-              class="w-full flex items-center justify-between px-3 py-1.5 text-xs font-mono hover:bg-zinc-800/60 transition-colors"
-              :class="locale === lang ? 'text-violet-400' : 'text-zinc-400'"
-            >
-              <span>{{ lang === 'en' ? '🇬🇧 English' : '🇪🇸 Español' }}</span>
-              <span v-if="locale === lang" class="i-lucide-check w-3 h-3" />
-            </button>
-
-            <div class="mx-3 my-1 border-t border-zinc-800" />
-
-            <!-- Theme -->
             <p class="px-3 pt-1.5 pb-1 text-[10px] font-mono text-zinc-600 uppercase tracking-wider">theme</p>
             <button
               @click.stop="isDark || toggleTheme()"

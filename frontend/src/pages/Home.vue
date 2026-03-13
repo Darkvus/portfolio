@@ -69,11 +69,26 @@ onMounted(async () => {
             </span>
           </div>
         </div>
-        <img
-          src="/darkvus.png"
-          alt="Alejandro Caraballo"
-          class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover ring-2 ring-violet-500/30 shrink-0"
-        />
+        <!-- Avatar with open-to-work ring -->
+        <div class="relative shrink-0">
+          <div
+            class="rounded-full p-0.5"
+            :class="profile.open_to_work
+              ? 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600'
+              : 'bg-violet-500/30'"
+          >
+            <img
+              src="/darkvus.png"
+              alt="Alejandro Caraballo"
+              class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover bg-zinc-950"
+            />
+          </div>
+          <!-- Green dot indicator -->
+          <span
+            v-if="profile.open_to_work"
+            class="absolute bottom-1 right-1 w-4 h-4 rounded-full bg-emerald-400 border-2 border-zinc-950 animate-pulse"
+          />
+        </div>
       </div>
       <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-base">
         {{ t('home.bio') }}
