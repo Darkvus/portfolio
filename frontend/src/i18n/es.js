@@ -1,8 +1,9 @@
 export default {
   nav: {
-    home:  'cd inicio',
-    blog:  'cd blog',
-    about: 'cd sobre-mí',
+    home:     'cd inicio',
+    blog:     'cd blog',
+    projects: 'cd proyectos',
+    about:    'cd sobre-mí',
   },
   home: {
     role:    'Desarrollador Backend · Apasionado de Python',
@@ -13,6 +14,15 @@ export default {
     viewAll: 'ver todas →',
     loading: 'cargando...',
     noPosts: '// aún no hay publicaciones — vuelve pronto',
+  },
+  projects: {
+    title:         'Proyectos',
+    description:   '// repos públicos en GitHub, ordenados por más recientes',
+    loading:       'obteniendo repos...',
+    filterAll:     'todos',
+    repos:         'repositorios',
+    noDescription: '// sin descripción',
+    empty:         'ningún repo coincide con este filtro',
   },
   blog: {
     title:       'Blog',

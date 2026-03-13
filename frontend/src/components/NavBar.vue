@@ -9,9 +9,10 @@ const route = useRoute()
 const { t, locale } = useI18n()
 
 const pages = [
-  { path: '/',      key: 'nav.home'  },
-  { path: '/blog',  key: 'nav.blog'  },
-  { path: '/about', key: 'nav.about' },
+  { path: '/',         key: 'nav.home'     },
+  { path: '/blog',     key: 'nav.blog'     },
+  { path: '/projects', key: 'nav.projects' },
+  { path: '/about',    key: 'nav.about'    },
 ]
 
 function toggleLang() {
