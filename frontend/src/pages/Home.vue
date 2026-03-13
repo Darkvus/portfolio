@@ -70,46 +70,21 @@ onMounted(async () => {
           </div>
         </div>
         <!-- Avatar -->
-        <div class="relative shrink-0 w-28 h-28 sm:w-32 sm:h-32">
-          <!-- Photo -->
+        <div class="flex flex-col items-center gap-0 shrink-0">
           <img
             src="/darkvus.png"
             alt="Alejandro Caraballo"
-            class="w-full h-full rounded-full object-cover"
-            :class="profile.open_to_work ? 'ring-[3px] ring-emerald-500' : 'ring-2 ring-violet-500/30'"
+            class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover"
+            :class="profile.open_to_work ? 'ring-2 ring-emerald-500/80' : 'ring-2 ring-violet-500/30'"
           />
-
-          <!-- Open to work arc text (SVG) -->
-          <svg
+          <!-- Open to work badge -->
+          <div
             v-if="profile.open_to_work"
-            viewBox="0 0 120 120"
-            class="absolute inset-0 w-full h-full pointer-events-none"
+            class="-mt-3 px-3 py-0.5 rounded-full text-[10px] font-mono font-semibold tracking-widest uppercase
+                   bg-emerald-500 text-zinc-950 shadow-lg shadow-emerald-900/40 z-10"
           >
-            <defs>
-              <path
-                id="otw-arc"
-                d="M 10,60 A 50,50 0 1,1 110,60"
-              />
-            </defs>
-            <!-- Green arc stroke at the bottom -->
-            <path
-              d="M 10,60 A 50,50 0 1,1 110,60"
-              fill="none"
-              stroke="#10b981"
-              stroke-width="9"
-              stroke-linecap="round"
-            />
-            <text
-              font-size="9.5"
-              font-family="monospace"
-              font-weight="600"
-              letter-spacing="1.8"
-              fill="#052e16"
-              text-anchor="middle"
-            >
-              <textPath href="#otw-arc" startOffset="50%">OPEN TO WORK</textPath>
-            </text>
-          </svg>
+            open to work
+          </div>
         </div>
       </div>
       <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-base">
