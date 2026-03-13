@@ -23,14 +23,4 @@ const router = createRouter({
   scrollBehavior: () => ({ top: 0 }),
 })
 
-const clickOutside = {
-  beforeMount(el, binding) {
-    el._clickOutside = (e) => { if (!el.contains(e.target)) binding.value(e) }
-    document.addEventListener('click', el._clickOutside)
-  },
-  unmounted(el) {
-    document.removeEventListener('click', el._clickOutside)
-  },
-}
-
-createApp(App).use(router).use(i18n).directive('click-outside', clickOutside).mount('#app')
+createApp(App).use(router).use(i18n).mount('#app')

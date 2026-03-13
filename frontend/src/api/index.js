@@ -3,6 +3,12 @@ const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000'
 async function req(path, options = {}) {
   const res = await fetch(`${API_BASE}${path}`, options)
   if (!res.ok) {
+    if (res.status === 401) {
+      localStorage.removeItem('admin_token')
+      const err = new Error('Unauthorized')
+      err.status = 401
+      throw err
+    }
     const err = await res.json().catch(() => ({ detail: 'Request failed' }))
     throw new Error(err.detail || 'Request failed')
   }

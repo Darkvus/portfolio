@@ -35,6 +35,11 @@ function logout() {
   subscribers.value = []
 }
 
+function handleAuthError(e) {
+  if (e.status === 401 || e.message === 'Unauthorized') logout()
+  else throw e
+}
+
 // ── Tabs ──────────────────────────────────────────────────────
 const activeTab = ref('posts') // posts | newsletter | profile
 
@@ -79,7 +84,7 @@ async function loadPosts() {
   try {
     posts.value = await getAllPosts(token.value)
   } catch (e) {
-    if (e.message.includes('401') || e.message.includes('Unauthorized')) logout()
+    handleAuthError(e)
   }
 }
 
@@ -163,7 +168,9 @@ async function copyEmails() {
 async function loadSubscribers() {
   try {
     subscribers.value = await getSubscribers(token.value)
-  } catch {}
+  } catch (e) {
+    handleAuthError(e)
+  }
 }
 
 async function removeSubscriber(id, email) {
@@ -185,7 +192,9 @@ async function loadProfile() {
   try {
     const p = await getProfile()
     profileForm.value = { ...p, available_from: p.available_from ?? '' }
-  } catch {}
+  } catch (e) {
+    handleAuthError(e)
+  }
 }
 
 async function saveProfile() {
@@ -200,7 +209,8 @@ async function saveProfile() {
     profileSaved.value = true
     setTimeout(() => { profileSaved.value = false }, 2500)
   } catch (e) {
-    profileError.value = e.message
+    if (e.status === 401) handleAuthError(e)
+    else profileError.value = e.message
   }
 }
 
