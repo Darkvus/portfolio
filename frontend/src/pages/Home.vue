@@ -70,32 +70,46 @@ onMounted(async () => {
           </div>
         </div>
         <!-- Avatar -->
-        <div class="flex flex-col items-center gap-1.5 shrink-0">
-          <div class="relative">
-            <div
-              class="rounded-full p-0.5"
-              :class="profile.open_to_work
-                ? 'bg-gradient-to-br from-emerald-400 via-emerald-500 to-emerald-600'
-                : 'bg-violet-500/30'"
-            >
-              <img
-                src="/darkvus.png"
-                alt="Alejandro Caraballo"
-                class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover bg-zinc-950"
-              />
-            </div>
-            <span
-              v-if="profile.open_to_work"
-              class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-emerald-400 border-2 border-zinc-950 animate-pulse"
-            />
-          </div>
-          <span
+        <div class="relative shrink-0 w-28 h-28 sm:w-32 sm:h-32">
+          <!-- Photo -->
+          <img
+            src="/darkvus.png"
+            alt="Alejandro Caraballo"
+            class="w-full h-full rounded-full object-cover"
+            :class="profile.open_to_work ? 'ring-[3px] ring-emerald-500' : 'ring-2 ring-violet-500/30'"
+          />
+
+          <!-- Open to work arc text (SVG) -->
+          <svg
             v-if="profile.open_to_work"
-            class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-950/60 text-emerald-400 border border-emerald-800/60 whitespace-nowrap"
+            viewBox="0 0 120 120"
+            class="absolute inset-0 w-full h-full pointer-events-none"
           >
-            <span class="w-1 h-1 rounded-full bg-emerald-400" />
-            {{ t('home.openToWork') }}
-          </span>
+            <defs>
+              <path
+                id="otw-arc"
+                d="M 10,60 A 50,50 0 1,1 110,60"
+              />
+            </defs>
+            <!-- Green arc stroke at the bottom -->
+            <path
+              d="M 10,60 A 50,50 0 1,1 110,60"
+              fill="none"
+              stroke="#10b981"
+              stroke-width="9"
+              stroke-linecap="round"
+            />
+            <text
+              font-size="9.5"
+              font-family="monospace"
+              font-weight="600"
+              letter-spacing="1.8"
+              fill="#052e16"
+              text-anchor="middle"
+            >
+              <textPath href="#otw-arc" startOffset="50%">OPEN TO WORK</textPath>
+            </text>
+          </svg>
         </div>
       </div>
       <p class="text-zinc-600 dark:text-zinc-400 leading-relaxed max-w-lg text-base">
