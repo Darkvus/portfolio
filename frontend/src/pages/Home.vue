@@ -11,9 +11,10 @@ const loading = ref(true)
 const profile = ref({ open_to_work: false, location: '', available_from: null })
 
 const stack = [
-  'Python', 'FastAPI', 'Django', 'Typer',
-  'SQLAlchemy', 'PostgreSQL', 'MongoDB',
-  'Docker', 'AWS', 'GitHub Actions',
+  'Python', 'FastAPI', 'Django', 'Pydantic',
+  'OpenAI', 'Claude', 'LLMs', 'Kafka',
+  'PostgreSQL', 'Redis', 'Docker', 'AWS',
+  'OpenTelemetry', 'GitHub Actions',
 ]
 
 function formatDate(dateStr) {

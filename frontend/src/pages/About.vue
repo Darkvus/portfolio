@@ -5,24 +5,40 @@ const { t, locale } = useI18n()
 
 const skills = [
   {
+    category: '// languages',
+    items: ['Python', 'Go', 'JavaScript', 'C/C++'],
+  },
+  {
     category: '// backend',
-    items: ['Python', 'FastAPI', 'Django', 'DRF', 'Typer', 'SQLAlchemy', 'Celery', 'Pytest'],
+    items: ['FastAPI', 'Django', 'DRF', 'Pydantic', 'Celery', 'Kafka'],
   },
   {
-    category: '// databases',
-    items: ['PostgreSQL', 'SQLite', 'MongoDB', 'Redis'],
-  },
-  {
-    category: '// cloud & infra',
-    items: ['AWS S3', 'Docker', 'GitHub Actions', 'CI/CD', 'Render', 'Vercel', 'Fly.io'],
+    category: '// ai',
+    items: ['OpenAI API', 'Anthropic Claude', 'LLMs', 'DSPy', 'MCP', 'AI Agents'],
   },
   {
     category: '// architecture',
-    items: ['Clean Architecture', 'CQRS', 'DDD', 'Microservices', 'REST', 'gRPC'],
+    items: ['Microservices', 'Clean Architecture', 'CQRS', 'gRPC'],
   },
   {
-    category: '// tools',
-    items: ['Git', 'Linux', 'Poetry', 'Ruff', 'OpenAPI', 'JWT'],
+    category: '// databases',
+    items: ['PostgreSQL', 'MySQL', 'Redis'],
+  },
+  {
+    category: '// cloud & devops',
+    items: ['AWS', 'S3', 'Docker', 'GitHub Actions', 'CI/CD', 'Poetry', 'UV', 'Nexus'],
+  },
+  {
+    category: '// observability',
+    items: ['OpenTelemetry', 'Distributed tracing'],
+  },
+  {
+    category: '// quality & security',
+    items: ['Ruff', 'Mypy', 'Flake8', 'Bandit', 'Safety'],
+  },
+  {
+    category: '// systems',
+    items: ['Linux', 'Windows', 'macOS', 'Cisco networking'],
   },
 ]
 
@@ -56,22 +72,48 @@ const education = [
 
 const experience = [
   {
-    role:    { en: 'Senior Python/Django Developer', es: 'Desarrollador Senior Python/Django' },
-    company: 'Celering',
-    from:    'Dec 2022',
+    role:    { en: 'Senior Python / AI Developer', es: 'Desarrollador Senior Python / IA' },
+    company: 'Tirant Lo Blanch',
+    from:    'May 2026',
     to:      null,
     items: {
       en: [
-        'Development and maintenance of microservices in a scalable environment.',
-        'Stack: Python 3, Django, FastAPI, DRF, Celery, Black, Flake8, Ruff, Poetry, Nexus.',
-        'AWS cloud with S3 buckets, CI/CD integration.',
-        'Clean Architecture, CQRS, gRPC.',
+        'Backend services and microservices within the Artificial Intelligence team.',
+        'API design and development with Python and FastAPI; AI agents with DSPy.',
+        'Integration of AI models via the OpenAI API and Anthropic Claude.',
+        'Clean Architecture, async processing with Kafka and Redis, Pydantic v2.',
+        'Observability and distributed tracing with OpenTelemetry.',
+        'CI/CD with GitHub Actions and UV; AWS/S3; Ruff, Flake8, Mypy, Bandit, Safety.',
       ],
       es: [
-        'Desarrollo y mantenimiento de microservicios en un entorno escalable.',
-        'Stack: Python 3, Django, FastAPI, DRF, Celery, Black, Flake8, Ruff, Poetry, Nexus.',
-        'Cloud AWS con buckets en S3, integración con CI/CD.',
+        'Servicios backend y microservicios dentro del equipo de Inteligencia Artificial.',
+        'Diseño y desarrollo de APIs con Python y FastAPI; agentes de IA con DSPy.',
+        'Integración de modelos de IA mediante OpenAI API y Anthropic Claude.',
+        'Clean Architecture, procesamiento asíncrono con Kafka y Redis, Pydantic v2.',
+        'Observabilidad y trazabilidad distribuida con OpenTelemetry.',
+        'CI/CD con GitHub Actions y UV; AWS/S3; Ruff, Flake8, Mypy, Bandit, Safety.',
+      ],
+    },
+  },
+  {
+    role:    { en: 'Senior Python/Django Developer', es: 'Desarrollador Senior Python/Django' },
+    company: 'Celering Smart Mobility Services',
+    from:    'Dec 2022',
+    to:      'Mar 2026',
+    items: {
+      en: [
+        'Design, development and maintenance of microservices and APIs for a distributed, scalable platform.',
+        'Stack: Python 3, Django, FastAPI, DRF, Celery, Ruff, Flake8, Safety, Poetry, Nexus.',
+        'AWS cloud with S3 buckets, CI/CD automation.',
         'Clean Architecture, CQRS, gRPC.',
+        'AI agents and MCPs for platform management and WhatsApp bookings.',
+      ],
+      es: [
+        'Diseño, desarrollo y mantenimiento de microservicios y APIs para una plataforma distribuida y escalable.',
+        'Stack: Python 3, Django, FastAPI, DRF, Celery, Ruff, Flake8, Safety, Poetry, Nexus.',
+        'Cloud AWS con buckets en S3, automatización de CI/CD.',
+        'Clean Architecture, CQRS, gRPC.',
+        'Agentes de IA y MCPs para la gestión de la plataforma y reservas por WhatsApp.',
       ],
     },
   },
@@ -80,10 +122,13 @@ const experience = [
     company: 'Acciona',
     from:    'Nov 2022',
     to:      'Dec 2022',
-    items:   { en: [], es: [] },
+    items: {
+      en: ['Backend development and maintenance of Python solutions.'],
+      es: ['Desarrollo backend y mantenimiento de soluciones Python.'],
+    },
   },
   {
-    role:    { en: 'Python/Django Web Developer', es: 'Desarrollador Web Python/Django' },
+    role:    { en: 'Python/Django Developer', es: 'Desarrollador Python/Django' },
     company: 'OpenWebinars',
     from:    'Mar 2021',
     to:      'Nov 2022',
@@ -115,13 +160,23 @@ const experience = [
     },
   },
   {
-    role:    { en: 'Python/Django Developer', es: 'Desarrollador Python/Django' },
+    role:    { en: 'Web Developer', es: 'Desarrollador Web' },
     company: 'Universidad de Cádiz',
     from:    'Jul 2018',
     to:      'Jul 2019',
     items: {
-      en: ['Development of the ORI web application.'],
-      es: ['Desarrollo de la aplicación web ORI.'],
+      en: ['Web development with Python and Django (ORI web application).'],
+      es: ['Desarrollo web con Python y Django (aplicación web ORI).'],
+    },
+  },
+  {
+    role:    { en: 'Web Developer', es: 'Desarrollador Web' },
+    company: 'AYUDA-T',
+    from:    'May 2018',
+    to:      'Jul 2018',
+    items: {
+      en: ['Web development with PHP.'],
+      es: ['Desarrollo web con PHP.'],
     },
   },
 ]

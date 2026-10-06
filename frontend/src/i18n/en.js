@@ -6,7 +6,7 @@ export default {
     about:    'cd about',
   },
   home: {
-    role:    'Backend Developer · Python Enthusiast',
+    role:    'Senior Python / AI Developer',
     bio:     'I build robust, efficient, and scalable backend systems. Passionate about Python, clean APIs, and solving complex problems with maintainable solutions.',
     about:   'About me',
     stack:   '// stack',
@@ -36,8 +36,8 @@ export default {
   },
   about: {
     title:      'About me',
-    bio1:       "Hi! I'm <strong>Alejandro Jose Caraballo Garcia</strong>, a backend developer with 6+ years of experience focused on Python and building efficient, scalable systems.",
-    bio2:       'I specialize in designing RESTful APIs, working with both relational and non-relational databases, and optimizing queries for performance and maintainability. I also have experience with AWS cloud services, CI/CD pipelines, and clean architecture patterns like CQRS and DDD.',
+    bio1:       "Hi! I'm <strong>Alejandro Jose Caraballo Garcia</strong>, a senior Python developer with 8+ years of experience in web development, microservices and distributed systems, now focused on Artificial Intelligence solutions and LLM integration.",
+    bio2:       'I design APIs and microservices with FastAPI and Django, apply Clean Architecture and CQRS, and build AI agents integrating OpenAI and Anthropic Claude. I care about maintainable code, quality, security and observability (OpenTelemetry), on top of AWS, Docker and CI/CD pipelines.',
     bio3:       "I'm passionate about writing clean code that solves real problems — and I'm always learning something new. Currently pursuing a Master's in Cybersecurity.",
     skills:     '// skills',
     experience: '// experience',
