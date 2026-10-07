@@ -241,7 +241,7 @@ const helpLines = [
 const whoamiLines = [
   '  Alejandro Caraballo',
   '  ─────────────────────────────────────',
-  '  Role     Backend Developer',
+  '  Role     AI Engineer',
   '  Based    Spain 🇪🇸',
   '  Focus    Python · FastAPI · Django',
   '           scalable systems & microservices',
@@ -286,7 +286,7 @@ const neofetchLines = [
   '  ██║  ██║ ╠═══════════════════════════════╣',
   '  ██║  ██║ ║ OS      Portfolio v1.0         ║',
   '  ██████╔╝ ║ Shell   terminal (custom)      ║',
-  '  ╚═════╝  ║ Role    Backend Developer      ║',
+  '  ╚═════╝  ║ Role    AI Engineer            ║',
   '           ║ Based   Spain 🇪🇸              ║',
   '           ║ Lang    Python · JS · SQL      ║',
   '           ║ Stack   FastAPI · Django · Vue ║',

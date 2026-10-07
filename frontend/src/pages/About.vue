@@ -72,7 +72,7 @@ const education = [
 
 const experience = [
   {
-    role:    { en: 'Senior Python / AI Developer', es: 'Desarrollador Senior Python / IA' },
+    role:    { en: 'AI Engineer', es: 'Ingeniero de IA' },
     company: 'Tirant Lo Blanch',
     from:    'May 2026',
     to:      null,
